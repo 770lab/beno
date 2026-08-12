@@ -30,10 +30,10 @@
 
   fetch('img/seq/manifest.json')
     .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-    .then(function (m) { setup(m.count, m.pad, m.ext, m.split); })
+    .then(function (m) { setup(m.count, m.pad, m.ext, m.split, m.e1); })
     .catch(function () { /* frames not built yet — static page */ });
 
-  function setup(COUNT, PAD, EXT, SPLIT) {
+  function setup(COUNT, PAD, EXT, SPLIT, E1) {
     var ctx = canvas.getContext('2d');
     var frames = new Array(COUNT);
     var loaded = new Array(COUNT);
@@ -101,9 +101,19 @@
     var phaseEls = document.querySelectorAll('#phases span');
     var finale = document.getElementById('finale');
 
-    /* pour occupies scroll 0 → 0.56, orbit 0.56 → 0.93, finale hold after */
-    var POUR_END = 0.56, ORBIT_END = 0.93;
-    var PHASE_RANGES = [[0, 0.2], [0.2, 0.4], [0.4, POUR_END], [POUR_END, ORBIT_END]];
+    /* arrivée 0 → 0.30, versement 0.30 → 0.72, orbite 0.72 → 0.93, finale ensuite.
+       Sans segment d'entrée (e1 absent du manifest), on retombe sur versement + orbite. */
+    var ENTRY_END = E1 ? 0.3 : 0, POUR_END = 0.72, ORBIT_END = 0.93;
+    var ENTRY_N = E1 || 1;
+    if (!E1) {
+      var ph0 = document.querySelector('#phases span[data-i="0"]');
+      if (ph0) ph0.style.display = 'none';
+      var labels = ['01  LA GLACE', '02  LE LAIT', '03  LE MATCHA', '04  AUTOUR'];
+      document.querySelectorAll('#phases span:not([data-i="0"])').forEach(function (el, i) {
+        el.textContent = labels[i] || el.textContent;
+      });
+    }
+    var PHASE_RANGES = [[0, ENTRY_END], [Math.max(ENTRY_END, 0.001), 0.44], [0.44, 0.58], [0.58, POUR_END], [POUR_END, ORBIT_END]];
 
     ScrollTrigger.create({
       trigger: exp,
@@ -114,7 +124,8 @@
         if (p > 0.005) exp.classList.add('is-started');
 
         var f;
-        if (p <= POUR_END) f = (p / POUR_END) * (SPLIT - 1);
+        if (p <= ENTRY_END) f = (p / ENTRY_END) * (ENTRY_N - 1);
+        else if (p <= POUR_END) f = (ENTRY_N - 1) + ((p - ENTRY_END) / (POUR_END - ENTRY_END)) * (SPLIT - ENTRY_N);
         else if (p <= ORBIT_END) f = (SPLIT - 1) + ((p - POUR_END) / (ORBIT_END - POUR_END)) * (COUNT - SPLIT);
         else f = COUNT - 1;
         target = Math.max(0, Math.min(COUNT - 1, f));
