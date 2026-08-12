@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beno Café — Coffee shop casher halavi, Paris 17ᵉ | Le matcha, versé</title>
+<meta name="description" content="Beno Café, coffee shop casher halavi au 14 rue Rennequin, Paris 17ᵉ. Matchas, cafés de spécialité, Ice Beno, brunchs — sous la surveillance du Beth Din de Paris. Scrollez : on vous prépare un matcha latte.">
+<meta property="og:title" content="Beno Café — le matcha, versé | Paris 17ᵉ">
+<meta property="og:description" content="Scrollez : on vous prépare un matcha latte. Coffee shop casher halavi, 14 rue Rennequin, Paris 17ᵉ.">
+<meta property="og:locale" content="fr_FR">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%234a2e1d'/><text x='16' y='21' text-anchor='middle' font-family='Georgia' font-size='12' fill='%23f6f0e6'>B</text></svg>">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="loader" id="loader"><span class="loader-mark">Beno Café</span><span class="loader-line"><i></i></span></div>
+
+<main class="exp" id="exp">
+  <div class="pin">
+    <canvas id="seqCanvas" class="seq-canvas" aria-hidden="true"></canvas>
+
+    <header class="nav">
+      <a class="brand" href="#">
+        <span class="brand-name">Beno Café</span>
+        <span class="brand-sub">COFFEE&nbsp;SHOP&nbsp;·&nbsp;PARIS&nbsp;17ᵉ</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#menu">Le menu</a>
+        <a href="#trouver">Nous trouver</a>
+      </nav>
+      <a class="pill pill--dark" href="https://www.ubereats.com/store-browse-uuid/1df6a355-37a0-5d9e-b748-f58367f053de?diningMode=DELIVERY">Commander</a>
+    </header>
+
+    <section class="product">
+      <p class="product-kicker">CASHER&nbsp;HALAVI&nbsp;·&nbsp;BETH&nbsp;DIN&nbsp;DE&nbsp;PARIS</p>
+      <h1 class="product-title">L'heure<br>du matcha.</h1>
+      <p class="product-sub">MATCHA&nbsp;LATTE</p>
+      <div class="dashes" id="dashes"><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="product-price">7,00&nbsp;€</p>
+      <a class="pill pill--matcha" href="https://www.ubereats.com/store-browse-uuid/1df6a355-37a0-5d9e-b748-f58367f053de?diningMode=DELIVERY">Commander&nbsp;sur&nbsp;Uber&nbsp;Eats</a>
+    </section>
+
+    <aside class="phases" id="phases">
+      <span data-i="0">01&nbsp;&nbsp;LA&nbsp;GLACE</span>
+      <span data-i="1">02&nbsp;&nbsp;LE&nbsp;LAIT</span>
+      <span data-i="2">03&nbsp;&nbsp;LE&nbsp;MATCHA</span>
+      <span data-i="3">04&nbsp;&nbsp;AUTOUR</span>
+    </aside>
+
+    <div class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i></div>
+
+    <div class="finale" id="finale">
+      <p class="finale-title">Et&nbsp;voilà.</p>
+      <div class="finale-cta">
+        <button class="pill pill--light">+&nbsp;Coco&nbsp;vanille&nbsp;·&nbsp;7,50&nbsp;€</button>
+        <button class="pill pill--light">+&nbsp;Fruité&nbsp;·&nbsp;8&nbsp;€</button>
+      </div>
+    </div>
+
+    <div class="callout" style="--x:42%; --y:24%" data-side="l"><span>MATCHA</span><i></i></div>
+    <div class="callout" style="--x:58%; --y:34%" data-side="r"><span>GLAÇONS</span><i></i></div>
+    <div class="callout" style="--x:42%; --y:58%" data-side="l"><span>LAIT&nbsp;½&nbsp;ÉCRÉMÉ</span><i></i></div>
+    <div class="callout" style="--x:58%; --y:74%" data-side="r"><span>VERRE&nbsp;STRIÉ</span><i></i></div>
+
+    <div class="hint" id="hint">SCROLLEZ&nbsp;—&nbsp;ON&nbsp;VOUS&nbsp;LE&nbsp;PRÉPARE</div>
+  </div>
+</main>
+
+<!-- ================= MENU (crawlable) ================= -->
+<section class="menu" id="menu">
+  <div class="menu-inner">
+    <p class="menu-kicker">EAT&nbsp;·&nbsp;DRINKS&nbsp;·&nbsp;COFFEE</p>
+    <h2 class="menu-title">Le menu</h2>
+
+    <div class="menu-cols">
+      <div class="menu-col">
+        <h3>Cafés</h3>
+        <ul>
+          <li><span>Ristretto</span><i></i><em>3,50&nbsp;€</em></li>
+          <li><span>Espresso</span><i></i><em>3,50&nbsp;€</em></li>
+          <li><span>Americano</span><i></i><em>5&nbsp;€</em></li>
+          <li><span>Espresso Affogato</span><i></i><em>7&nbsp;€</em></li>
+          <li><span>Capuccino</span><i></i><em>6&nbsp;€</em></li>
+          <li><span>Flat white</span><i></i><em>6&nbsp;€</em></li>
+          <li><span>Latte</span><i></i><em>6&nbsp;€</em></li>
+          <li><span>Chai Latte</span><i></i><em>8&nbsp;€</em></li>
+          <li><span>Dirty Chai Latte</span><i></i><em>8,50&nbsp;€</em></li>
+        </ul>
+        <h3>Chocolats</h3>
+        <ul>
+          <li><span>Chocolat</span><i></i><em>7&nbsp;€</em></li>
+          <li><span>Chocolat viennois</span><i></i><em>8&nbsp;€</em></li>
+        </ul>
+      </div>
+      <div class="menu-col">
+        <h3 class="h-matcha">Matchas</h3>
+        <ul>
+          <li><span>Matcha latte</span><i></i><em>7&nbsp;€</em></li>
+          <li><span>Matcha coco vanille</span><i></i><em>7,50&nbsp;€</em></li>
+          <li><span>Matcha latte fruité</span><i></i><em>8&nbsp;€</em></li>
+        </ul>
+        <h3>Ice Beno</h3>
+        <ul>
+          <li><span>Coffee</span><i></i><em>8&nbsp;€</em></li>
+          <li><span>Coffee Noisette</span><i></i><em>8&nbsp;€</em></li>
+          <li><span>Vanilla</span><i></i><em>8&nbsp;€</em></li>
+          <li><span>Chocolat</span><i></i><em>8&nbsp;€</em></li>
+          <li><span>Limonana</span><i></i><em>8&nbsp;€</em></li>
+        </ul>
+        <h3>Suppléments</h3>
+        <ul class="menu-small">
+          <li><span>Lait de coco / amande</span><i></i><em>+1&nbsp;€</em></li>
+          <li><span>Lait d'avoine · sans gluten</span><i></i><em>+1&nbsp;€</em></li>
+          <li><span>Sirops vanille · noisette · caramel</span><i></i><em>+0,50&nbsp;€</em></li>
+          <li><span>Coulis fruits rouges · passion · mangue · caramel</span><i></i><em>+1&nbsp;€</em></li>
+          <li><span>Chantilly / shot de café</span><i></i><em>+2&nbsp;€</em></li>
+        </ul>
+      </div>
+    </div>
+    <p class="menu-note">Et aussi : jus frais, toasts, salades, clubs — pour les pauses gourmandes.</p>
+    <p class="menu-badge">Sous la surveillance du Beth Din de Paris — Kosher Halavi</p>
+  </div>
+</section>
+
+<!-- ================= TROUVER ================= -->
+<section class="find" id="trouver">
+  <div class="menu-inner">
+    <h2 class="menu-title">Nous trouver</h2>
+    <p class="find-addr">14&nbsp;rue&nbsp;Rennequin, 75017&nbsp;Paris</p>
+    <p class="find-note">☀️ Fermeture annuelle du 9 au 23 août — réouverture le lundi 24 août.</p>
+    <div class="find-ctas">
+      <a class="pill pill--dark" href="https://maps.google.com/?q=Beno+Caf%C3%A9+14+rue+Rennequin+75017+Paris">Itinéraire</a>
+      <a class="pill pill--light" href="https://www.instagram.com/benocafeparis/">@benocafeparis</a>
+      <a class="pill pill--light" href="https://www.ubereats.com/store-browse-uuid/1df6a355-37a0-5d9e-b748-f58367f053de?diningMode=DELIVERY">Livraison Uber&nbsp;Eats</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <span class="foot-brand">Beno Café</span>
+  <span class="foot-line">14 rue Rennequin, 75017 Paris · Casher Halavi — Beth Din de Paris</span>
+  <span class="foot-demo">Démo — proposition de site par 770lab</span>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
