@@ -28,7 +28,7 @@
   var canvas = document.getElementById('seqCanvas');
   var pin = document.querySelector('.pin');
 
-  fetch('img/seq/manifest.json')
+  fetch('img/seq2/manifest.json')
     .then(function (r) { if (!r.ok) throw 0; return r.json(); })
     .then(function (m) { setup(m.count, m.pad, m.ext, m.split, m.e1); })
     .catch(function () { /* frames not built yet — static page */ });
@@ -41,7 +41,7 @@
 
     function src(i) {
       var n = String(i + 1); while (n.length < (PAD || 4)) n = '0' + n;
-      return 'img/seq/s_' + n + '.' + (EXT || 'jpg');
+      return 'img/seq2/s_' + n + '.' + (EXT || 'jpg');
     }
     function load(i, cb) {
       if (frames[i]) return;
