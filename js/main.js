@@ -28,12 +28,12 @@
   var canvas = document.getElementById('seqCanvas');
   var pin = document.querySelector('.pin');
 
-  fetch('img/seq2/manifest.json')
+  fetch('img/seq2/manifest.json?v=4')
     .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-    .then(function (m) { setup(m.count, m.pad, m.ext, m.split, m.e1); })
+    .then(function (m) { setup(m.count, m.pad, m.ext, m.split, m.e1, m.s2); })
     .catch(function () { /* frames not built yet — static page */ });
 
-  function setup(COUNT, PAD, EXT, SPLIT, E1) {
+  function setup(COUNT, PAD, EXT, SPLIT, E1, S2) {
     var ctx = canvas.getContext('2d');
     var frames = new Array(COUNT);
     var loaded = new Array(COUNT);
@@ -101,19 +101,24 @@
     var phaseEls = document.querySelectorAll('#phases span');
     var finale = document.getElementById('finale');
 
-    /* arrivée 0 → 0.30, versement 0.30 → 0.72, orbite 0.72 → 0.93, finale ensuite.
-       Sans segment d'entrée (e1 absent du manifest), on retombe sur versement + orbite. */
-    var ENTRY_END = E1 ? 0.3 : 0, POUR_END = 0.72, ORBIT_END = 0.93;
+    /* arrivée → versement → orbite → « à table » (bourikas & jus) → finale.
+       Sans s2 : l'orbite s'étire ; sans e1 : pas de segment d'entrée. */
+    var ENTRY_END = E1 ? 0.25 : 0;
+    var POUR_END = 0.56, ORBIT_END = S2 ? 0.74 : 0.93, SPREAD_END = 0.93;
     var ENTRY_N = E1 || 1;
-    if (!E1) {
-      var ph0 = document.querySelector('#phases span[data-i="0"]');
-      if (ph0) ph0.style.display = 'none';
-      var labels = ['01  LA GLACE', '02  LE LAIT', '03  LE MATCHA', '04  AUTOUR'];
-      document.querySelectorAll('#phases span:not([data-i="0"])').forEach(function (el, i) {
-        el.textContent = labels[i] || el.textContent;
-      });
+    var SPREAD_N = S2 || COUNT;
+    if (!S2) {
+      var ph5 = document.querySelector('#phases span[data-i="5"]');
+      if (ph5) ph5.style.display = 'none';
     }
-    var PHASE_RANGES = [[0, ENTRY_END], [Math.max(ENTRY_END, 0.001), 0.44], [0.44, 0.58], [0.58, POUR_END], [POUR_END, ORBIT_END]];
+    var PHASE_RANGES = [
+      [0, ENTRY_END],
+      [Math.max(ENTRY_END, 0.001), 0.36],
+      [0.36, 0.46],
+      [0.46, POUR_END],
+      [POUR_END, ORBIT_END],
+      [ORBIT_END, SPREAD_END]
+    ];
 
     ScrollTrigger.create({
       trigger: exp,
@@ -126,11 +131,12 @@
         var f;
         if (p <= ENTRY_END) f = (p / ENTRY_END) * (ENTRY_N - 1);
         else if (p <= POUR_END) f = (ENTRY_N - 1) + ((p - ENTRY_END) / (POUR_END - ENTRY_END)) * (SPLIT - ENTRY_N);
-        else if (p <= ORBIT_END) f = (SPLIT - 1) + ((p - POUR_END) / (ORBIT_END - POUR_END)) * (COUNT - SPLIT);
+        else if (p <= ORBIT_END) f = (SPLIT - 1) + ((p - POUR_END) / (ORBIT_END - POUR_END)) * (SPREAD_N - SPLIT);
+        else if (p <= SPREAD_END) f = (SPREAD_N - 1) + ((p - ORBIT_END) / (SPREAD_END - ORBIT_END)) * (COUNT - SPREAD_N);
         else f = COUNT - 1;
         target = Math.max(0, Math.min(COUNT - 1, f));
 
-        var seg = Math.min(4, Math.floor(p * 5));
+        var seg = Math.min(5, Math.floor(p * 6));
         dashes.forEach(function (d, i) { d.classList.toggle('is-on', i <= seg); });
         dots.forEach(function (d, i) { d.classList.toggle('is-on', i === seg); });
 
