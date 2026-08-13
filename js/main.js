@@ -28,7 +28,7 @@
   var canvas = document.getElementById('seqCanvas');
   var pin = document.querySelector('.pin');
 
-  fetch('img/seq2/manifest.json?v=4')
+  fetch('img/seq2/manifest.json?v=5')
     .then(function (r) { if (!r.ok) throw 0; return r.json(); })
     .then(function (m) { setup(m.count, m.pad, m.ext, m.split, m.e1, m.s2); })
     .catch(function () { /* frames not built yet — static page */ });
@@ -68,10 +68,15 @@
       return -1;
     }
 
+    var coLayer = document.getElementById('coLayer');
+    var strip = false; /* portrait : bandeau 16:9 pleine largeur, sans coupe latérale */
+    var dpr = 1;
+
     function resize() {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = canvas.clientWidth * dpr;
       canvas.height = canvas.clientHeight * dpr;
+      strip = canvas.clientWidth / canvas.clientHeight < 0.9;
       drawnFrame = -1;
     }
     window.addEventListener('resize', resize);
@@ -83,10 +88,25 @@
       var cw = canvas.width, ch = canvas.height;
       var ir = im.naturalWidth / im.naturalHeight, cr = cw / ch;
       var dw, dh, dx, dy;
-      if (ir > cr) { dh = ch; dw = ch * ir; dx = (cw - dw) / 2; dy = 0; }
-      else { dw = cw; dh = cw / ir; dx = 0; dy = (ch - dh) / 2; }
+      if (strip) {
+        /* portrait : image ajustée à la largeur, centrée un peu au-dessus du milieu */
+        ctx.fillStyle = '#f6f0e5';
+        ctx.fillRect(0, 0, cw, ch);
+        dw = cw; dh = cw / ir; dx = 0; dy = (ch - dh) * 0.62;
+      } else if (ir > cr) {
+        dh = ch; dw = ch * ir; dx = (cw - dw) / 2; dy = 0;
+      } else {
+        dw = cw; dh = cw / ir; dx = 0; dy = (ch - dh) / 2;
+      }
       ctx.drawImage(im, dx, dy, dw, dh);
       drawnFrame = i;
+      /* calque des étiquettes calé sur l'image réellement dessinée */
+      if (coLayer) {
+        coLayer.style.left = (dx / dpr) + 'px';
+        coLayer.style.top = (dy / dpr) + 'px';
+        coLayer.style.width = (dw / dpr) + 'px';
+        coLayer.style.height = (dh / dpr) + 'px';
+      }
     }
 
     gsap.ticker.add(function () {

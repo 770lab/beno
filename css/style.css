@@ -137,6 +137,8 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 
 /* ---------------- callouts ---------------- */
 
+.co-layer { position: absolute; inset: 0; z-index: 11; pointer-events: none; }
+
 .callout {
   position: absolute; left: var(--x); top: var(--y); z-index: 11;
   display: flex; align-items: center;
@@ -232,6 +234,50 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   .callout i { width: 24px; }
   .exp { height: 600vh; }
   .menu-cols { grid-template-columns: 1fr; }
+}
+
+/* portrait : le bandeau image vit au centre, le texte au-dessus */
+@media (max-width: 700px) and (orientation: portrait) {
+  .product {
+    left: 7vw; right: 7vw; top: 13%; transform: none; max-width: none;
+  }
+  .product-title { font-size: clamp(34px, 10vw, 46px); }
+  .product-price { margin-top: 14px; font-size: 28px; }
+  .product .pill--matcha { margin-top: 12px; padding: 13px 22px; font-size: 14px; }
+  .product-kicker { font-size: 10px; }
+  .phases { display: none; }
+  .finale { left: 7vw; right: 7vw; top: 13%; transform: none; }
+  .finale-title { font-size: clamp(40px, 12vw, 56px); }
+  .finale-cta .pill { font-size: 12.5px; padding: 10px 16px; }
+  .callout span { font-size: 9px; padding: 5px 9px; letter-spacing: 0.16em; }
+  .callout i { width: 16px; }
+  .hint { bottom: 34px; width: 86vw; left: 50%; transform: translateX(-50%); text-align: center; white-space: normal; line-height: 1.8; letter-spacing: 0.2em; font-size: 10px; }
+  .dots { bottom: 12px; }
+  .callout.flip-m { flex-direction: row-reverse; transform: none; }
+}
+
+/* paysage téléphone : tout se compacte pour tenir en ~390px de haut */
+@media (max-height: 520px) and (orientation: landscape) {
+  .nav { padding: 12px 20px 0; }
+  .brand-name { font-size: 22px; }
+  .brand-sub { display: none; }
+  .product { max-width: 38vw; top: 54%; }
+  .product-kicker { font-size: 9px; margin-bottom: 6px; }
+  .product-title { font-size: clamp(26px, 4.8vw, 36px); }
+  .product-sub { margin-top: 8px; font-size: 10px; }
+  .dashes { margin-top: 8px; }
+  .dashes i { width: 20px; }
+  .product-price { margin-top: 10px; font-size: 20px; }
+  .product .pill--matcha { margin-top: 8px; padding: 9px 16px; font-size: 12px; }
+  .phases { display: none; }
+  .finale-title { font-size: clamp(30px, 6vw, 44px); }
+  .finale-cta { margin-top: 12px; }
+  .finale-cta .pill { font-size: 11px; padding: 8px 14px; }
+  .callout span { font-size: 8.5px; padding: 4px 8px; }
+  .callout i { width: 14px; }
+  .pin.is-finale .co-layer { display: none; }
+  .hint { display: none; }
+  .dots { bottom: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
