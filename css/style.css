@@ -108,15 +108,6 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
 .product-price { margin-top: 30px; font-family: var(--serif); font-size: 38px; font-weight: 600; }
 .product .pill--matcha { margin-top: 20px; }
 
-/* ---------------- rail de phases ---------------- */
-
-.phases {
-  position: absolute; right: 46px; top: 50%; transform: translateY(-50%);
-  z-index: 10; display: flex; flex-direction: column; gap: 20px; text-align: right;
-}
-.phases span { font-size: 12px; font-weight: 700; letter-spacing: 0.28em; color: var(--choco-soft); opacity: 0.4; transition: opacity 0.3s, color 0.3s; }
-.phases span.is-on { opacity: 1; color: var(--matcha-deep); }
-
 .dots { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 10; display: flex; gap: 9px; }
 .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line); transition: background 0.3s, transform 0.3s; }
 .dots i.is-on { background: var(--choco); transform: scale(1.25); }
@@ -230,30 +221,30 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   .nav { padding: 18px 20px 0; }
   .nav-links { display: none; }
   .product { left: 7vw; max-width: 300px; }
-  .phases { right: 16px; }
   .callout i { width: 24px; }
   .exp { height: 600vh; }
   .menu-cols { grid-template-columns: 1fr; }
 }
 
-/* portrait : le bandeau image vit au centre, le texte au-dessus */
-@media (max-width: 700px) and (orientation: portrait) {
-  .product {
-    left: 7vw; right: 7vw; top: 13%; transform: none; max-width: none;
+/* portrait : overlay compact sur image plein écran (côtés recadrés, assumé) */
+@media (orientation: portrait) {
+  .pin::after {
+    background:
+      linear-gradient(180deg, rgba(246, 240, 229, 0.94) 0%, rgba(246, 240, 229, 0.72) 30%, rgba(246, 240, 229, 0) 52%);
   }
-  .product-title { font-size: clamp(34px, 10vw, 46px); }
-  .product-price { margin-top: 14px; font-size: 28px; }
+  .product { left: 6vw; right: 6vw; top: 12%; transform: none; max-width: none; }
+  .product-title { font-size: clamp(34px, 9.5vw, 46px); text-shadow: 0 2px 16px rgba(246, 240, 229, 0.55); }
+  .product-price { margin-top: 12px; font-size: 26px; }
   .product .pill--matcha { margin-top: 12px; padding: 13px 22px; font-size: 14px; }
   .product-kicker { font-size: 10px; }
-  .phases { display: none; }
-  .finale { left: 7vw; right: 7vw; top: 13%; transform: none; }
-  .finale-title { font-size: clamp(40px, 12vw, 56px); }
+  .finale { left: 6vw; right: 6vw; top: 12%; transform: none; }
+  .finale-title { font-size: clamp(40px, 12vw, 56px); text-shadow: 0 2px 16px rgba(246, 240, 229, 0.55); }
   .finale-cta .pill { font-size: 12.5px; padding: 10px 16px; }
   .callout span { font-size: 9px; padding: 5px 9px; letter-spacing: 0.16em; }
   .callout i { width: 16px; }
+  .callout.flip-m { flex-direction: row-reverse; transform: none; }
   .hint { bottom: 34px; width: 86vw; left: 50%; transform: translateX(-50%); text-align: center; white-space: normal; line-height: 1.8; letter-spacing: 0.2em; font-size: 10px; }
   .dots { bottom: 12px; }
-  .callout.flip-m { flex-direction: row-reverse; transform: none; }
 }
 
 /* paysage téléphone : tout se compacte pour tenir en ~390px de haut */
@@ -269,7 +260,6 @@ button { background: none; border: 0; color: inherit; font: inherit; cursor: poi
   .dashes i { width: 20px; }
   .product-price { margin-top: 10px; font-size: 20px; }
   .product .pill--matcha { margin-top: 8px; padding: 9px 16px; font-size: 12px; }
-  .phases { display: none; }
   .finale-title { font-size: clamp(30px, 6vw, 44px); }
   .finale-cta { margin-top: 12px; }
   .finale-cta .pill { font-size: 11px; padding: 8px 14px; }

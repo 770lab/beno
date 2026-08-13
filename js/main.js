@@ -69,14 +69,12 @@
     }
 
     var coLayer = document.getElementById('coLayer');
-    var strip = false; /* portrait : bandeau 16:9 pleine largeur, sans coupe latérale */
     var dpr = 1;
 
     function resize() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = canvas.clientWidth * dpr;
       canvas.height = canvas.clientHeight * dpr;
-      strip = canvas.clientWidth / canvas.clientHeight < 0.9;
       drawnFrame = -1;
     }
     window.addEventListener('resize', resize);
@@ -88,12 +86,7 @@
       var cw = canvas.width, ch = canvas.height;
       var ir = im.naturalWidth / im.naturalHeight, cr = cw / ch;
       var dw, dh, dx, dy;
-      if (strip) {
-        /* portrait : image ajustée à la largeur, centrée un peu au-dessus du milieu */
-        ctx.fillStyle = '#f6f0e5';
-        ctx.fillRect(0, 0, cw, ch);
-        dw = cw; dh = cw / ir; dx = 0; dy = (ch - dh) * 0.62;
-      } else if (ir > cr) {
+      if (ir > cr) {
         dh = ch; dw = ch * ir; dx = (cw - dw) / 2; dy = 0;
       } else {
         dw = cw; dh = cw / ir; dx = 0; dy = (ch - dh) / 2;
@@ -118,7 +111,6 @@
     /* UI elements */
     var dashes = document.querySelectorAll('#dashes i');
     var dots = document.querySelectorAll('#dots i');
-    var phaseEls = document.querySelectorAll('#phases span');
     var finale = document.getElementById('finale');
 
     /* arrivée → versement → orbite → « à table » (bourikas & jus) → finale.
@@ -127,18 +119,6 @@
     var POUR_END = 0.56, ORBIT_END = S2 ? 0.74 : 0.93, SPREAD_END = 0.93;
     var ENTRY_N = E1 || 1;
     var SPREAD_N = S2 || COUNT;
-    if (!S2) {
-      var ph5 = document.querySelector('#phases span[data-i="5"]');
-      if (ph5) ph5.style.display = 'none';
-    }
-    var PHASE_RANGES = [
-      [0, ENTRY_END],
-      [Math.max(ENTRY_END, 0.001), 0.36],
-      [0.36, 0.46],
-      [0.46, POUR_END],
-      [POUR_END, ORBIT_END],
-      [ORBIT_END, SPREAD_END]
-    ];
 
     ScrollTrigger.create({
       trigger: exp,
@@ -160,10 +140,6 @@
         dashes.forEach(function (d, i) { d.classList.toggle('is-on', i <= seg); });
         dots.forEach(function (d, i) { d.classList.toggle('is-on', i === seg); });
 
-        phaseEls.forEach(function (el, i) {
-          var r = PHASE_RANGES[i];
-          el.classList.toggle('is-on', p >= r[0] && p < r[1]);
-        });
 
         var fin = p > 0.94;
         pin.classList.toggle('is-finale', fin);
